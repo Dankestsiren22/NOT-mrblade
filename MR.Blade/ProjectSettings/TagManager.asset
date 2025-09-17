@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - killzone
+  - Health
+  - Hazard
+  - Basic Enemy
+  - player
   layers:
   - Default
   - TransparentFX
