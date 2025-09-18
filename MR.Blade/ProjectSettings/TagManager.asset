@@ -9,6 +9,7 @@ TagManager:
   - Hazard
   - Basic Enemy
   - player
+  - Basic Project
   layers:
   - Default
   - TransparentFX

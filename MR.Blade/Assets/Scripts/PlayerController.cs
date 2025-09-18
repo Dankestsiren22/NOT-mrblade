@@ -92,6 +92,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Hazard")
             health--;
+        if (collision.gameObject.tag == "Basic Project")
+            health--;
     }
 
 }
