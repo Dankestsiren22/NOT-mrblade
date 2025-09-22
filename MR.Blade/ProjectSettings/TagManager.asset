@@ -10,6 +10,7 @@ TagManager:
   - Basic Enemy
   - player
   - Basic Project
+  - demon
   layers:
   - Default
   - TransparentFX

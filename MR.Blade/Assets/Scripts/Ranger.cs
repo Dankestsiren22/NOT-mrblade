@@ -4,10 +4,12 @@ using UnityEngine.AI;
 public class Ranger : MonoBehaviour
 {
     NavMeshAgent agent;
-    public float speed;
-    public float stopdistance;
+    public int speed;
+    public int stopdistance;
+    public int shootdistance;
     public GameObject Shot;
     private Transform player;
+    public int health = 3;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,9 +32,15 @@ public class Ranger : MonoBehaviour
             agent.destination = Vector3.MoveTowards(transform.position, player.position, speed);
         }
 
-        
+        //if (Vector3.Distance(transform.position, player.position) = shootdistance)
+        {
+            //shoot shot's
+        }
 
-  
+
+        if (health <= 0)
+            Destroy(gameObject);
+
     }
 
 
