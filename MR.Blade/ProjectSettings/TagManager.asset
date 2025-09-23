@@ -11,6 +11,8 @@ TagManager:
   - player
   - Basic Project
   - demon
+  - prog
+  - weapon
   layers:
   - Default
   - TransparentFX

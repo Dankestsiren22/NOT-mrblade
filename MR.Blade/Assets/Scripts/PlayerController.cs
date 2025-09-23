@@ -1,102 +1,156 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+
 public class PlayerController : MonoBehaviour
 {
-    
-
     Camera playerCam;
     Rigidbody rb;
-    
-    public Vector3 respawnPoint;
+    Ray jumpRay;
+    Ray interactRay;
+    RaycastHit interactHit;
+    GameObject pickupObj;
 
-    float verticalmove;
-    float horizontalmove;
+    public PlayerInput input;
+    public Transform weaponSlot;
+    public Weapon currentWeapon;
+
+    float verticalMove;
+    float horizontalMove;
 
     public float speed = 5f;
     public float jumpHeight = 10f;
-    public float GroundDetetlenght = .5f;
-    Ray ray;
-    RaycastHit hit;
+    public float groundDetectLength = .5f;
+    public float interactDistance = 1f;
+
     public int health = 5;
-    public int maxhealth = 5;
-    //// Start is called once before the first execution of Update after the MonoBehaviour is created////
-    void Start()
+    public int maxHealth = 5;
+
+    public bool attacking = true;
+
+    public void Start()
     {
-        ray = new Ray(transform.position, transform.forward);
-        respawnPoint = new Vector3(0, 1, 0);
+        input = GetComponent<PlayerInput>();
+        jumpRay = new Ray(transform.position, -transform.up);
+        interactRay = new Ray(transform.position, transform.forward);
         rb = GetComponent<Rigidbody>();
         playerCam = Camera.main;
-  
+        weaponSlot = transform.GetChild(0);
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    //// Update is called once per frame////
-    void Update()
+    private void Update()
     {
         if (health <= 0)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        
+        // Player Rotation (Horiztonally)
+        Quaternion playerRotation = playerCam.transform.rotation;
+        playerRotation.x = 0;
+        playerRotation.z = 0;
+        transform.rotation = playerRotation;
+        
+
+        // Movement System (Take vert/horiz input and convert to 3D movement)
+        Vector3 temp = rb.linearVelocity;
+
+        temp.x = verticalMove * speed;
+        temp.z = horizontalMove * speed;
+
+        jumpRay.origin = transform.position;
+        jumpRay.direction = -transform.up;
+
+        interactRay.origin = transform.position;
+        interactRay.direction = playerCam.transform.forward;
+
+        if (Physics.Raycast(interactRay, out interactHit, interactDistance))
         {
-            transform.position = respawnPoint;
-            health = maxhealth;
+            if (interactHit.collider.gameObject.tag == "weapon")
+            {
+                pickupObj = interactHit.collider.gameObject;
+            }
+        }
+        else
+            pickupObj = null;
+        if(currentWeapon)
+        {
+            if (currentWeapon.holdToattack && attacking)
+            {
+                currentWeapon.fire();
+            }
+
         }
 
-        ////camera rotatiom////
-        Quaternion playerRotaion = playerCam.transform.rotation;
-        playerRotaion.x = 0;
-        playerRotaion.z = 0;
-        transform.rotation = playerRotaion;
-        
-        //// movment system////
-        Vector3 temp = rb.linearVelocity;
-        temp.x = verticalmove * speed;
-        temp.z = horizontalmove * speed;
-
-        ray.origin = transform.position;
-        ray.direction = -transform.up;
-        
-
-       
-
-        rb.linearVelocity = (temp.x * transform.forward) + (temp.y * transform.up) + (temp.z * transform.right);
+        rb.linearVelocity = (temp.x * transform.forward) +
+                            (temp.y * transform.up) +
+                            (temp.z * transform.right);
     }
-
+    // Read player input and convert to values to be used by rb for movement
     public void Move(InputAction.CallbackContext context)
     {
         Vector2 inputAxis = context.ReadValue<Vector2>();
-        verticalmove = inputAxis.y;
-        horizontalmove = inputAxis.x;
-      
-    }
-    public void jump()
-    {
-        if(Physics.Raycast(ray, GroundDetetlenght))
-            rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
-     
-            
-    }
 
+        verticalMove = inputAxis.y;
+        horizontalMove = inputAxis.x;
+    }
+    // If raycast downward sees collider, player can jump.
+    public void Jump()
+    {
+        if (Physics.Raycast(jumpRay, groundDetectLength))
+            rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
+    }
+    public void Attack(InputAction.CallbackContext context)
+    {
+        if (currentWeapon)
+        {
+            if (currentWeapon.holdToattack)
+            {
+                if (context.ReadValueAsButton())
+                    attacking = true;
+                else
+                    attacking = false;
+            }
+        }
+    }
+    public void Reload()
+    {
+        if (currentWeapon)
+            currentWeapon.reload();
+    }
+    public void Interact()
+    {
+        if (pickupObj)
+        {
+            if (pickupObj.tag == "weapon")
+                pickupObj.GetComponent<Weapon>().equip(this);
+        }
+        else
+            Reload();
+    }
+    public void DropWeapon()
+    {
+        if (currentWeapon)
+        {
+            currentWeapon.GetComponent<Weapon>().unequip();
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "killzone")
-        health = 0;
+            health = 0;
 
-        if ((other.tag == "Health") && (health < maxhealth))
-                health++;
-                Destroy(other.gameObject);
-            
-
-
+        if ((other.tag == "health") && (health < maxHealth))
+        {
+            health++;
+            Destroy(other.gameObject);
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Hazard")
-            health--;
-        if (collision.gameObject.tag == "Basic Project")
+        if (collision.gameObject.tag == "hazard")
             health--;
     }
-
 }
-
-
-
