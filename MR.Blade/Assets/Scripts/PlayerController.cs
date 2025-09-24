@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         interactRay = new Ray(transform.position, transform.forward);
         rb = GetComponent<Rigidbody>();
         playerCam = Camera.main;
-        weaponSlot = transform.GetChild(0);
+        weaponSlot = playerCam.transform.GetChild(0);
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
         jumpRay.origin = transform.position;
         jumpRay.direction = -transform.up;
 
-        interactRay.origin = transform.position;
+        interactRay.origin = playerCam.transform.position;
         interactRay.direction = playerCam.transform.forward;
 
         if (Physics.Raycast(interactRay, out interactHit, interactDistance))
@@ -118,7 +118,9 @@ public class PlayerController : MonoBehaviour
     public void Reload()
     {
         if (currentWeapon)
-            currentWeapon.reload();
+            if(!currentWeapon.reloading)
+                currentWeapon.reload();
+        
     }
     public void Interact()
     {
@@ -126,6 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             if (pickupObj.tag == "weapon")
                 pickupObj.GetComponent<Weapon>().equip(this);
+            pickupObj = null;
         }
         else
             Reload();

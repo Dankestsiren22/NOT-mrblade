@@ -257,7 +257,7 @@ MonoBehaviour:
   holdToattack: 1
   weaponName: Rifle
   projLifespan: 1
-  projVelocity: 1000
+  projVelocity: 10000
   reloadCooldown: 1
   rof: 0.5
   fireModes: 0

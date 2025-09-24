@@ -23,4 +23,13 @@ public class Melee : MonoBehaviour
         if (health <= 0)
             Destroy(gameObject);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "prog")
+            health--;
+    }
+
+
+
 }
