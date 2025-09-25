@@ -254,12 +254,13 @@ MonoBehaviour:
   firingDirection: {fileID: 0}
   canFire: 1
   weaponID: 1
+  reloading: 0
   holdToattack: 1
   weaponName: Rifle
   projLifespan: 1
   projVelocity: 10000
   reloadCooldown: 1
-  rof: 0.5
+  rof: 0.16
   fireModes: 0
   currentFireMode: 0
   clip: 30

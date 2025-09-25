@@ -13,6 +13,9 @@ TagManager:
   - demon
   - prog
   - weapon
+  - UI_health
+  - PAUSE
+  - Ammont
   layers:
   - Default
   - TransparentFX
