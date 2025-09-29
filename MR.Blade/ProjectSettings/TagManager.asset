@@ -16,6 +16,8 @@ TagManager:
   - UI_health
   - PAUSE
   - Ammont
+  - Reggy
+  - ReggyHealth
   layers:
   - Default
   - TransparentFX

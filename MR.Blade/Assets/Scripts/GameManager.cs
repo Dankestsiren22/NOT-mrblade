@@ -5,8 +5,10 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     PlayerController player;
+    Reggy Reggy;
     Rifle rifle;
     Image healthbar;
+    Image Reggybar;
     Text Ammo;
     GameObject pauseMenu;
     public bool ispaused = false;
@@ -15,9 +17,11 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex >= 1)
         {
+            Ammo = GameObject.FindGameObjectWithTag("Ammont").GetComponent<Text>();
             healthbar = GameObject.FindGameObjectWithTag("UI_health").GetComponent<Image>();
-            //Ammo = GameObject.FindGameObjectWithTag("Ammonet").GetComponent<Text>();
+            Reggybar = GameObject.FindGameObjectWithTag("ReggyHealth").GetComponent<Image>();
             player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerController>();
+            Reggy = GameObject.FindGameObjectWithTag("Reggy").GetComponent<Reggy>();
             //rifle = GameObject.FindGameObjectWithTag("weapon").GetComponent<Rifle>();
             pauseMenu = GameObject.FindGameObjectWithTag("PAUSE");
             pauseMenu.SetActive(false);
@@ -29,7 +33,8 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         healthbar.fillAmount = (float)player.health / (float)player.maxHealth;
-        //Ammo.text = rifle.clip + "/" + rifle.ammo; 
+        Reggybar.fillAmount = (float)Reggy.health / (float)Reggy.maxHealth;
+        //Ammo.text = "yes";
     }
 
     public void Pause()
