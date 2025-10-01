@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     RaycastHit interactHit;
     GameObject pickupObj;
 
+    public bool islive;
+
     public PlayerInput input;
     public Transform weaponSlot;
     public Weapon currentWeapon;
@@ -30,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     public void Start()
     {
+        islive = true;
         input = GetComponent<PlayerInput>();
         jumpRay = new Ray(transform.position, -transform.up);
         interactRay = new Ray(transform.position, transform.forward);
@@ -44,7 +47,12 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (health <= 0)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        {
+			islive = false;
+			SceneManager.LoadScene(2);
+            
+		}
+            
 
         
         // Player Rotation (Horiztonally)
