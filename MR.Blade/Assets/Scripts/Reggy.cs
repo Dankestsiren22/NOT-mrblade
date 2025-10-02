@@ -12,13 +12,14 @@ public class Reggy : MonoBehaviour
     public GameObject ranger;
     public GameObject melee;
     private Transform player;
-    private int spawnammount;
+    //private int spawnammount;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
         player = GameObject.FindWithTag("player").transform;
-        spawnammount = 0;
+        //spawnammount = 0;
         
         
 
@@ -27,13 +28,16 @@ public class Reggy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject[] spawnammount;
+        spawnammount = GameObject.FindGameObjectsWithTag("demon");
 
         spawnPoint = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
+        //spawnammount = GameObject.FindGameObjectsWithTag("demon");
 
-       if (Demons <= 100 && spawnammount  <= 10)
+       if (Demons <= 100 && spawnammount.Length  <= 10)
         {
             Instantiate(melee, spawnPoint, transform.rotation);
-            spawnammount = spawnammount +1;
+            
         }
         
        
