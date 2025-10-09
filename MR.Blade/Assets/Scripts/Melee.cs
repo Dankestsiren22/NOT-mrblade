@@ -6,11 +6,13 @@ public class Melee : MonoBehaviour
     private Transform player;
     public float SwingRange;
     public float health = 5;
+    Reggy Reggy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.FindWithTag("player").transform;
         agent = GetComponent<NavMeshAgent>();
+        Reggy = GameObject.FindGameObjectWithTag("Reggy").GetComponent<Reggy>();
     }
 
     // Update is called once per frame
@@ -20,8 +22,18 @@ public class Melee : MonoBehaviour
 
         //if (Vector3.Distance(transform.position, player.position) < SwingRange)
         //attack
-        if (health <= 0)
-            Destroy(gameObject);
+        if (Reggy.St1P1 == true)
+        {
+            if (health <= 0)
+            {
+                Reggy.ST1P1Health--;
+                Destroy(gameObject);
+
+            }
+        }
+       
+       
+            
     }
 
     private void OnCollisionEnter(Collision collision)

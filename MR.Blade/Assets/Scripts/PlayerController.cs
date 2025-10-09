@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     float horizontalMove;
 
     public float speed = 5f;
+    public float DODGEDIS = 5f;
     public float jumpHeight = 10f;
     public float groundDetectLength = .5f;
     public float interactDistance = 1f;
@@ -165,9 +166,10 @@ public class PlayerController : MonoBehaviour
             health--;
     }
 
-    public void Dodge()
+    public void Dodge(InputAction.CallbackContext context)
     {
-        
+        if (context.ReadValueAsButton())
+            rb.AddForce(transform.forward * DODGEDIS, ForceMode.Impulse);
     }
 
 
