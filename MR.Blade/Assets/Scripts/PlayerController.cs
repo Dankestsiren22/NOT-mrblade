@@ -166,10 +166,10 @@ public class PlayerController : MonoBehaviour
             health--;
     }
 
-    public void Dodge(InputAction.CallbackContext context)
+    public void Dodge()
     {
-        if (context.ReadValueAsButton())
-            rb.AddForce(transform.forward * DODGEDIS, ForceMode.Impulse);
+        rb.AddForce(transform.forward * DODGEDIS, ForceMode.Impulse);
+
     }
 
 

@@ -31,9 +31,17 @@ public class Melee : MonoBehaviour
 
             }
         }
-       
-       
-            
+        if (Reggy.St1P2 == true)
+        {
+            if (health <= 0)
+            {
+                Reggy.ST1P2Health--;
+                Destroy(gameObject);
+
+            }
+        }
+
+
     }
 
     private void OnCollisionEnter(Collision collision)

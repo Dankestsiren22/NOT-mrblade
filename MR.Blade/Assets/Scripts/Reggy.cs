@@ -8,6 +8,7 @@ public class Reggy : MonoBehaviour
     public int speed = 1;
     
     public Vector3 spawnPoint;
+    public Vector3 spawnPoints;
     public GameObject ranger;
     public GameObject melee;
     private Transform player;
@@ -19,6 +20,8 @@ public class Reggy : MonoBehaviour
     public int ST1P1Health = 50;
     public int ST1P2Health = 50;
     public int Demons = 0;
+    // Stage2
+    public bool St2 = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -42,7 +45,7 @@ public class Reggy : MonoBehaviour
             spawnammount = GameObject.FindGameObjectsWithTag("demon");
 
             spawnPoint = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
-            //spawnammount = GameObject.FindGameObjectsWithTag("demon");
+            
 
             if (spawnammount.Length <= 10)
             {
@@ -87,17 +90,35 @@ public class Reggy : MonoBehaviour
 
 
         }
+
+       if (ST1P2Health == 0)
+        {
+            //play cutsence 
+            St1P2 = false;
+            St2 = true;
+
+        }
+
+       if (St2 == true)
+        {
+            candamage = true;
+        }
+       
         
 
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "prog")
+        if (candamage == true)
         {
-            ST1P1Health--;
-            ST1P2Health--;
+            if (collision.gameObject.tag == "prog")
+            {
+                ST1P1Health--;
+                ST1P2Health--;
+            }
         }
+       
            
     }
 
