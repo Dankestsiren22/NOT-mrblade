@@ -22,9 +22,10 @@ public class Reggy : MonoBehaviour
     public int ST1P2MaxHealth = 50;
     public int ST1P1Health = 50;
     public int ST1P2Health = 50;
-    
-    
-    
+    public int ST2Health = 1000;
+    public int ST2HealthMax = 1000;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
