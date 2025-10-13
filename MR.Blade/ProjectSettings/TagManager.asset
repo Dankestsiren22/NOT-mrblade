@@ -21,6 +21,7 @@ TagManager:
   - ST1P1Health
   - ST1P2Health
   - demons
+  - ST1HealthParent
   layers:
   - Default
   - TransparentFX

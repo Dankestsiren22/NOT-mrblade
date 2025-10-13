@@ -5,23 +5,26 @@ public class Reggy : MonoBehaviour
 {
     //general info
     public bool candamage = true;
+    public Vector3 St2point;
     public int speed = 1;
-    
+    NavMeshAgent ReggyAi;
     public Vector3 spawnPoint;
     public Vector3 spawnPoints;
     public GameObject ranger;
     public GameObject melee;
     private Transform player;
-    // Stage 1
+    // Stage Bools
     public bool St1P1 = false;
     public bool St1P2 = false;
+    public bool St2 = false;
+    //Stage Health's
     public int ST1P1MaxHealth = 50;
     public int ST1P2MaxHealth = 50;
     public int ST1P1Health = 50;
     public int ST1P2Health = 50;
-    public int Demons = 0;
-    // Stage2
-    public bool St2 = false;
+    
+    
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,9 +33,11 @@ public class Reggy : MonoBehaviour
         player = GameObject.FindWithTag("player").transform;
         candamage = false;
         St1P1 = true;
+        ReggyAi = GetComponent<NavMeshAgent>();
+        St2point = new Vector3(0, 1, 85);
         //spawnammount = 0;
-        
-        
+
+
 
     }
 
@@ -102,6 +107,7 @@ public class Reggy : MonoBehaviour
        if (St2 == true)
         {
             candamage = true;
+            transform.position = St2point;
         }
        
         
