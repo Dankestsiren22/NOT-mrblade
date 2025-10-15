@@ -147,5 +147,5 @@ MonoBehaviour:
   speed: 10
   stopdistance: 10
   shootdistance: 10
-  Shot: {fileID: 0}
+  Shot: {fileID: 6748807673726030829, guid: 485cadd20c81c1b4f8053e7b05bd2c77, type: 3}
   health: 3

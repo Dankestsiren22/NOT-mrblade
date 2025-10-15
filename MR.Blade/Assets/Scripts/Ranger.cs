@@ -10,6 +10,7 @@ public class Ranger : MonoBehaviour
     public GameObject Shot;
     private Transform player;
     public int health = 3;
+    public Vector3 spawnPoint;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,9 +33,9 @@ public class Ranger : MonoBehaviour
             agent.destination = Vector3.MoveTowards(transform.position, player.position, speed);
         }
 
-        //if (Vector3.Distance(transform.position, player.position) = shootdistance)
+       if (Vector3.Distance(transform.position, player.position) == shootdistance * 90)
         {
-            //shoot shot's
+            Instantiate(Shot, spawnPoint, transform.rotation); 
         }
 
 

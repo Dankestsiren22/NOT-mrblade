@@ -2239,6 +2239,8 @@ MonoBehaviour:
   ST1P2MaxHealth: 50
   ST1P1Health: 50
   ST1P2Health: 50
+  ST2Health: 1000
+  ST2HealthMax: 1000
 --- !u!195 &1048527908
 NavMeshAgent:
   m_ObjectHideFlags: 0
