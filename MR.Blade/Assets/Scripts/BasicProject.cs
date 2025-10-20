@@ -4,7 +4,7 @@ public class BasicProject : MonoBehaviour
 {
 
     NavMeshAgent agent;
-   
+    public int speed;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,7 +16,7 @@ public class BasicProject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = GameObject.Find("player").transform.position;
+        agent.destination = GameObject.Find("player").transform.position * speed;
         
     }
     private void OnCollisionEnter(Collision collision)

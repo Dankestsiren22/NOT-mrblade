@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
     RaycastHit interactHit;
     GameObject pickupObj;
 
+    public Vector3 direction;
+
     public bool islive;
 
     public PlayerInput input;
@@ -53,8 +55,8 @@ public class PlayerController : MonoBehaviour
 			SceneManager.LoadScene(2);
             
 		}
-            
 
+        direction = rb.linearVelocity;
         
         // Player Rotation (Horiztonally)
         Quaternion playerRotation = playerCam.transform.rotation;
@@ -166,9 +168,10 @@ public class PlayerController : MonoBehaviour
             health--;
     }
 
-    public void Dodge()
+    public void Dodge(InputAction.CallbackContext context)
     {
-        rb.AddForce(transform.forward * DODGEDIS, ForceMode.Impulse);
+        if (context.ReadValueAsButton())
+            rb.AddForce(direction * DODGEDIS, ForceMode.Impulse);
 
     }
 

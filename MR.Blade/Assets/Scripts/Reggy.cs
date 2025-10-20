@@ -56,7 +56,7 @@ public class Reggy : MonoBehaviour
             if (spawnammount.Length <= 10)
             {
             
-                //Instantiate(melee, spawnPoint, transform.rotation);
+                Instantiate(melee, spawnPoint, transform.rotation);
                 
                 
 
@@ -79,7 +79,7 @@ public class Reggy : MonoBehaviour
             if (spawnammount.Length <= 10)
             {
                 
-                //Instantiate(melee, spawnPoint, transform.rotation);
+                Instantiate(melee, spawnPoint, transform.rotation);
 
 
 

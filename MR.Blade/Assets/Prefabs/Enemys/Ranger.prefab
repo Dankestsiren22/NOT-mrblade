@@ -183,3 +183,6 @@ MonoBehaviour:
   health: 3
   ShotPoint: {fileID: 9004274669232827288}
   spawnPoint: {x: 0, y: 0, z: 0}
+  canshoot: 0
+  rateofire: 0.1
+  projLifespan: 5
