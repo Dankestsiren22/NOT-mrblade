@@ -2188,12 +2188,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fcafcb4139a7634f9a8c18c5e3484ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  direction: {x: 0, y: 0, z: 0}
   islive: 0
   input: {fileID: 0}
   weaponSlot: {fileID: 1593123666}
   currentWeapon: {fileID: 1163535592}
   speed: 5
-  DODGEDIS: 4967
+  DODGEDIS: 500
   jumpHeight: 5
   groundDetectLength: 2
   interactDistance: 20
