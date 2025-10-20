@@ -101,7 +101,6 @@ public class Weapon : MonoBehaviour
     public void unequip()
     {
         player.currentWeapon = null;
-        
         transform.SetParent(null);
 
         GetComponent<Rigidbody>().isKinematic = false;
@@ -113,9 +112,8 @@ public class Weapon : MonoBehaviour
 
     IEnumerator cooldownFire(float cooldownTime)
     {
-       
+
         yield return new WaitForSeconds(cooldownTime);
-       
         if(clip > 0)
             canFire = true;
     }
