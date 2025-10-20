@@ -40,6 +40,7 @@ public class Weapon : MonoBehaviour
     {
         weaponSpeaker = GetComponent<AudioSource>();
         firePoint = transform.GetChild(0);
+        firingDirection = Camera.main;
     }
 
     public void fire()
