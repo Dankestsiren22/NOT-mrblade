@@ -1,13 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class Weapon : MonoBehaviour
 {
     PlayerController player;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameObject projectile;
     public AudioSource weaponSpeaker;
     public Transform firePoint;
@@ -15,9 +12,9 @@ public class Weapon : MonoBehaviour
 
     [Header("Meta Attributes")]
     public bool canFire = true;
-    public int weaponID;
     public bool reloading = false;
-    public bool holdToattack = true;
+    public bool holdToAttack = true;
+    public int weaponID;
     public string weaponName;
 
     [Header("Weapon Stats")]
@@ -40,20 +37,20 @@ public class Weapon : MonoBehaviour
     {
         weaponSpeaker = GetComponent<AudioSource>();
         firePoint = transform.GetChild(0);
-        firingDirection = Camera.main;
     }
 
     public void fire()
     {
-        if(canFire && !reloading && clip > 0 && weaponID > -1)
+        if (canFire && !reloading && clip > 0 && weaponID > -1)
         {
+
             weaponSpeaker.Play();
             GameObject p = Instantiate(projectile, firePoint.position, firePoint.rotation);
             p.GetComponent<Rigidbody>().AddForce(firingDirection.transform.forward * projVelocity);
             Destroy(p, projLifespan);
             clip--;
             canFire = false;
-            StartCoroutine("cooldownFire", rof);
+            StartCoroutine("cooldownFire");
         }
     }
 
@@ -77,10 +74,10 @@ public class Weapon : MonoBehaviour
                 clip += reloadCount;
                 ammo -= reloadCount;
             }
+
             reloading = true;
             canFire = false;
-
-            StartCoroutine("reloadingCooldown", reloadCooldown);
+            StartCoroutine("reloadingCooldown");
             return;
         }
     }
@@ -102,6 +99,7 @@ public class Weapon : MonoBehaviour
     public void unequip()
     {
         player.currentWeapon = null;
+
         transform.SetParent(null);
 
         GetComponent<Rigidbody>().isKinematic = false;
@@ -111,16 +109,18 @@ public class Weapon : MonoBehaviour
         this.player = null;
     }
 
-    IEnumerator cooldownFire(float cooldownTime)
+    IEnumerator cooldownFire()
     {
+        yield return new WaitForSeconds(rof);
 
-        yield return new WaitForSeconds(cooldownTime);
-        if(clip > 0)
+        if (clip > 0)
             canFire = true;
     }
+
     IEnumerator reloadingCooldown()
     {
         yield return new WaitForSeconds(reloadCooldown);
+
         reloading = false;
         canFire = true;
     }

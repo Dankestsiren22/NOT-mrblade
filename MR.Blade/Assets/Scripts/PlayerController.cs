@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,10 +12,6 @@ public class PlayerController : MonoBehaviour
     RaycastHit interactHit;
     GameObject pickupObj;
 
-    public Vector3 direction;
-
-    public bool islive;
-
     public PlayerInput input;
     public Transform weaponSlot;
     public Weapon currentWeapon;
@@ -22,8 +19,10 @@ public class PlayerController : MonoBehaviour
     float verticalMove;
     float horizontalMove;
 
-    public float speed = 5f;
+    public Vector3 direction;
     public float DODGEDIS = 5f;
+
+    public float speed = 5f;
     public float jumpHeight = 10f;
     public float groundDetectLength = .5f;
     public float interactDistance = 1f;
@@ -31,11 +30,11 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
     public int maxHealth = 5;
 
-    public bool attacking = true;
+    public bool attacking = false;
+
 
     public void Start()
     {
-        islive = true;
         input = GetComponent<PlayerInput>();
         jumpRay = new Ray(transform.position, -transform.up);
         interactRay = new Ray(transform.position, transform.forward);
@@ -50,20 +49,18 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (health <= 0)
-        {
-			islive = false;
-			SceneManager.LoadScene(2);
-            
-		}
-
-        direction = rb.linearVelocity;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        // dogde
         
+        direction = rb.linearVelocity;
+        direction.y = 0;
+
         // Player Rotation (Horiztonally)
         Quaternion playerRotation = playerCam.transform.rotation;
         playerRotation.x = 0;
         playerRotation.z = 0;
         transform.rotation = playerRotation;
-        
+
 
         // Movement System (Take vert/horiz input and convert to 3D movement)
         Vector3 temp = rb.linearVelocity;
@@ -86,14 +83,10 @@ public class PlayerController : MonoBehaviour
         }
         else
             pickupObj = null;
-        if(currentWeapon)
-        {
-            if (currentWeapon.holdToattack && attacking)
-            {
-                currentWeapon.fire();
-            }
 
-        }
+        if (currentWeapon)
+            if (currentWeapon.holdToAttack && attacking)
+                currentWeapon.fire();
 
         rb.linearVelocity = (temp.x * transform.forward) +
                             (temp.y * transform.up) +
@@ -113,32 +106,47 @@ public class PlayerController : MonoBehaviour
         if (Physics.Raycast(jumpRay, groundDetectLength))
             rb.AddForce(transform.up * jumpHeight, ForceMode.Impulse);
     }
+    public void fireModeSwitch()
+    {
+        if (currentWeapon.weaponID == 1)
+        {
+            currentWeapon.GetComponent<Rifle>().changeFireMode();
+        }
+    }
     public void Attack(InputAction.CallbackContext context)
     {
         if (currentWeapon)
         {
-            if (currentWeapon.holdToattack)
+            if (currentWeapon.holdToAttack)
             {
                 if (context.ReadValueAsButton())
                     attacking = true;
                 else
                     attacking = false;
             }
+
+            else
+                if (context.ReadValueAsButton())
+                currentWeapon.fire();
         }
     }
     public void Reload()
     {
         if (currentWeapon)
-            if(!currentWeapon.reloading)
+            if (!currentWeapon.reloading)
                 currentWeapon.reload();
-        
     }
     public void Interact()
     {
         if (pickupObj)
         {
             if (pickupObj.tag == "weapon")
+            {
+                if (currentWeapon)
+                    DropWeapon();
+
                 pickupObj.GetComponent<Weapon>().equip(this);
+            }
             pickupObj = null;
         }
         else
@@ -164,9 +172,10 @@ public class PlayerController : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Hazard")
+        if (collision.gameObject.tag == "hazard")
             health--;
     }
+
 
     public void Dodge(InputAction.CallbackContext context)
     {
@@ -174,7 +183,5 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(direction * DODGEDIS, ForceMode.Impulse);
 
     }
-
-
 
 }
