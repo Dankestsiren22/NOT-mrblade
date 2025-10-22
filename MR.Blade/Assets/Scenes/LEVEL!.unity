@@ -2349,8 +2349,8 @@ MonoBehaviour:
   St1P1: 0
   St1P2: 0
   St2: 0
-  ST1P1MaxHealth: 50
-  ST1P2MaxHealth: 50
+  ST1P1MaxHealth: 20
+  ST1P2MaxHealth: 20
   ST1P1Health: 50
   ST1P2Health: 50
   ST2Health: 1000
