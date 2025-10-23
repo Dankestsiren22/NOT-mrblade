@@ -3,6 +3,18 @@ using UnityEngine;
 using UnityEngine.AI;
 public class Reggy : MonoBehaviour
 {
+    //SPawnPOints
+    public Vector3 spawn1;
+    public Vector3 spawn2;
+    public Vector3 spawn3;
+    public Vector3 spawn4;
+    public Vector3 spawn5;
+    public Vector3 spawn6;
+    public Vector3 spawn7;
+    public Vector3 spawn8;
+    public Vector3 spawn9;
+    public Vector3 spawn10;
+
     //general info
     public bool candamage = true;
     public Vector3 St2point;
@@ -13,6 +25,7 @@ public class Reggy : MonoBehaviour
     public GameObject ranger;
     public GameObject melee;
     private Transform player;
+    public bool SpawnedEnemys1;
     // Stage Bools
     public bool St1P1 = false;
     public bool St1P2 = false;
@@ -30,7 +43,7 @@ public class Reggy : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        SpawnedEnemys1 = false;
         player = GameObject.FindWithTag("player").transform;
         candamage = false;
         St1P1 = true;
@@ -45,9 +58,21 @@ public class Reggy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (St1P1 == true)
+        if (St1P1 == true && SpawnedEnemys1 == false)
         {
-            GameObject[] spawnammount;
+
+            Instantiate(melee, spawn1, transform.rotation);
+            Instantiate(melee, spawn2, transform.rotation);
+            Instantiate(melee, spawn3, transform.rotation);
+            Instantiate(melee, spawn4, transform.rotation);
+            Instantiate(melee, spawn5, transform.rotation);
+            Instantiate(melee, spawn6, transform.rotation);
+            Instantiate(melee, spawn7, transform.rotation);
+            Instantiate(melee, spawn8, transform.rotation);
+            Instantiate(melee, spawn9, transform.rotation);
+            Instantiate(melee, spawn10, transform.rotation);
+            SpawnedEnemys1 = true;
+            /*GameObject[] spawnammount;
             spawnammount = GameObject.FindGameObjectsWithTag("demon");
 
             spawnPoint = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
@@ -65,9 +90,9 @@ public class Reggy : MonoBehaviour
             {
                 St1P1 = false;
                 St1P2 = true;
-            }
+            }*/
         }
-       if (St1P2 == true)
+        if (St1P2 == true)
         {
             spawnPoint = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
             spawnPoints = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
