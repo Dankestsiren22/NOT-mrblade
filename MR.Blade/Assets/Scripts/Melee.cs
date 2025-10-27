@@ -5,15 +5,13 @@ public class Melee : MonoBehaviour
     NavMeshAgent agent;
     private Transform player;
     public float SwingRange;
-    
-    public GameObject Katana;
     public float health = 5;
     Reggy Reggy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         player = GameObject.FindWithTag("player").transform;
-        //Katana = GameObject.FindWithTag("Katana").GetComponent<BoxCollider>();
+        
         agent = GetComponent<NavMeshAgent>();
         Reggy = GameObject.FindGameObjectWithTag("Reggy").GetComponent<Reggy>();
         
@@ -24,9 +22,9 @@ public class Melee : MonoBehaviour
     {
         agent.destination = GameObject.Find("player").transform.position;
 
-        if (Vector3.Distance(transform.position, player.position) < SwingRange)
+        if (Vector3.Distance(transform.position, player.position) <= SwingRange)
         {
-           //Katana.BoxCollider.SetActive(true);
+           
         }
         
         if (Reggy.St1P1 == true)

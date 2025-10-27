@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class Ranger : MonoBehaviour
 {
     Reggy Reggy;
+    public float Cooldown;
     NavMeshAgent agent;
     public int speed;
     public int stopdistance;
@@ -29,20 +30,9 @@ public class Ranger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GameObject[] Shotammount;
-        Shotammount = GameObject.FindGameObjectsWithTag("Basic Project");
 
-        if (Vector3.Distance(transform.position, player.position) > stopdistance)
-        {
-            agent.destination = Vector3.MoveTowards(transform.position, player.position, speed);
-        }
+        agent.destination = GameObject.Find("player").transform.position;
 
-        else if (Vector3.Distance(transform.position, player.position) < stopdistance)
-        {
-            agent.destination = Vector3.MoveTowards(transform.position, player.position, -speed);
-        }
-
-        
 
 
         if (Vector3.Distance(transform.position, player.position) >= shootdistance && canshoot == true)
@@ -50,7 +40,8 @@ public class Ranger : MonoBehaviour
             GameObject p = Instantiate(Shot, ShotPoint.position, transform.rotation);
             Destroy(p, projLifespan);
             canshoot = false;
-            StartCoroutine("cooldownFire", rateofire);
+            StartCoroutine("cooldownFire");
+            return;
         }
 
 
@@ -82,10 +73,10 @@ public class Ranger : MonoBehaviour
             health--;
     }
 
-    IEnumerator cooldownFire(float cooldownTime)
+    IEnumerator cooldownFire()
     {
 
-        yield return new WaitForSeconds(cooldownTime);
+        yield return new WaitForSeconds(Cooldown);
         canshoot = true;
         
     }

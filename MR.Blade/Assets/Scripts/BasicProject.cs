@@ -16,7 +16,7 @@ public class BasicProject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        agent.destination = GameObject.Find("player").transform.position * speed;
+        agent.destination = GameObject.Find("player").transform.position;
         
     }
     private void OnCollisionEnter(Collision collision)

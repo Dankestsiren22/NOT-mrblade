@@ -15,9 +15,10 @@ public class GameManager : MonoBehaviour
     Rifle rifle;
     TextMeshProUGUI Ammo;
     
-    //player health
+    //player health and stats
     PlayerController player;
     Image healthbar;
+    Image DodgeSign;
     //pause menu
     GameObject pauseMenu;
     public bool ispaused = false;
@@ -43,9 +44,10 @@ public class GameManager : MonoBehaviour
             ST1HealthParent.SetActive(false);
             ST2HealthParent.SetActive(false);
 
-            //player health
+            //player health and stats
             player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerController>();
             healthbar = GameObject.FindGameObjectWithTag("UI_health").GetComponent<Image>();
+            DodgeSign = GameObject.FindGameObjectWithTag("DodgeSIgn").GetComponent<Image>();
 
             //pause menu
             pauseMenu = GameObject.FindGameObjectWithTag("PAUSE");
@@ -58,8 +60,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //player health
+        //player health and stats
 	    healthbar.fillAmount = (float)player.health / (float)player.maxHealth;
+        //DodgeSign.fillAmount = (float)player.DodgeCoolDown;
 
         //reggy Health bar Functions
         ST1P1Health.fillAmount = (float)Reggy.ST1P1Health / (float)Reggy.ST1P1MaxHealth;
@@ -134,10 +137,10 @@ public class GameManager : MonoBehaviour
 
 
         }
+    }
 
-
-
-
-
+    public void SetDodgeCooldown(float amount)
+    {
+        DodgeSign.fillAmount = 1.0f - amount;
     }
 }

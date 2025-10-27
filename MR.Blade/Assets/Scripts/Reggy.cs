@@ -26,6 +26,7 @@ public class Reggy : MonoBehaviour
     public GameObject melee;
     private Transform player;
     public bool SpawnedEnemys1;
+    public bool SpawnedEnemy2;
     // Stage Bools
     public bool St1P1 = false;
     public bool St1P2 = false;
@@ -44,6 +45,7 @@ public class Reggy : MonoBehaviour
     void Start()
     {
         SpawnedEnemys1 = false;
+        SpawnedEnemy2 = false;
         player = GameObject.FindWithTag("player").transform;
         candamage = false;
         St1P1 = true;
@@ -72,56 +74,24 @@ public class Reggy : MonoBehaviour
             Instantiate(melee, spawn9, transform.rotation);
             Instantiate(melee, spawn10, transform.rotation);
             SpawnedEnemys1 = true;
-            /*GameObject[] spawnammount;
-            spawnammount = GameObject.FindGameObjectsWithTag("demon");
 
-            spawnPoint = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
-            
-
-            if (spawnammount.Length <= 10)
-            {
-            
-                Instantiate(melee, spawnPoint, transform.rotation);
-                
-                
-
-            }
             if (ST1P1Health == 0)
             {
                 St1P1 = false;
                 St1P2 = true;
-            }*/
+            }
         }
-        if (St1P2 == true)
+        if (St1P2 == true && SpawnedEnemy2 == false)
         {
-            spawnPoint = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
-            spawnPoints = new Vector3(Random.Range(-50.0f, 50.0f), 1, Random.Range(-50.0f, 50.0f));
-            GameObject[] spawnammounts;
-            spawnammounts = GameObject.FindGameObjectsWithTag("demons");
-            GameObject[] spawnammount;
-            spawnammount = GameObject.FindGameObjectsWithTag("demon");
 
-            if (spawnammount.Length <= 10)
-            {
-                
-                Instantiate(melee, spawnPoint, transform.rotation);
-
-
-
-            }
-
-            if (spawnammounts.Length <= 10)
-            {
-
-                Instantiate(ranger, spawnPoints, transform.rotation);
-
-
-
-            }
-
-
+            Instantiate(melee, spawnPoint, transform.rotation);
+            Instantiate(ranger, spawnPoints, transform.rotation);
+            Instantiate(melee, spawnPoint, transform.rotation);
+            Instantiate(ranger, spawnPoints, transform.rotation);
+            Instantiate(ranger, spawnPoints, transform.rotation);
+            SpawnedEnemy2 = true;
         }
-
+    
        if (ST1P2Health == 0)
         {
             //play cutsence 

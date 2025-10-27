@@ -1,4 +1,4 @@
-
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -6,12 +6,14 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     Camera playerCam;
+
     Rigidbody rb;
     Ray jumpRay;
     Ray interactRay;
     RaycastHit interactHit;
     GameObject pickupObj;
 
+    public GameManager gameManager;
     public PlayerInput input;
     public Transform weaponSlot;
     public Weapon currentWeapon;
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 direction;
     public float DODGEDIS = 5f;
+    public float DodgeCoolDown = 5f;
+    public bool canDodge = true;
 
     public float speed = 5f;
     public float jumpHeight = 10f;
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour
     public int maxHealth = 5;
 
     public bool attacking = false;
+
+    private float currentDodgeCooldown;
 
 
     public void Start()
@@ -91,6 +97,15 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = (temp.x * transform.forward) +
                             (temp.y * transform.up) +
                             (temp.z * transform.right);
+
+        if(currentDodgeCooldown > 0)
+        {
+            currentDodgeCooldown -= Time.deltaTime;
+            gameManager.SetDodgeCooldown(currentDodgeCooldown / DodgeCoolDown);
+        } else
+        {
+            canDodge = true;
+        }
     }
     // Read player input and convert to values to be used by rb for movement
     public void Move(InputAction.CallbackContext context)
@@ -179,9 +194,12 @@ public class PlayerController : MonoBehaviour
 
     public void Dodge(InputAction.CallbackContext context)
     {
-        if (context.ReadValueAsButton())
+        if (context.ReadValueAsButton() && canDodge == true)
+        {
             rb.AddForce(direction * DODGEDIS, ForceMode.Impulse);
-
+            canDodge = false;
+            currentDodgeCooldown = DodgeCoolDown;
+            return;
+        }
     }
-
 }
