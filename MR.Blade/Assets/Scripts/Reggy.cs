@@ -12,8 +12,7 @@ public class Reggy : MonoBehaviour
     public Vector3 spawn6;
     public Vector3 spawn7;
     public Vector3 spawn8;
-    public Vector3 spawn9;
-    public Vector3 spawn10;
+    
 
     //general info
     public bool candamage = true;
@@ -71,16 +70,16 @@ public class Reggy : MonoBehaviour
             Instantiate(melee, spawn6, transform.rotation);
             Instantiate(melee, spawn7, transform.rotation);
             Instantiate(melee, spawn8, transform.rotation);
-            Instantiate(melee, spawn9, transform.rotation);
-            Instantiate(melee, spawn10, transform.rotation);
             SpawnedEnemys1 = true;
 
-            if (ST1P1Health == 0)
-            {
-                St1P1 = false;
-                St1P2 = true;
-            }
+            
         }
+        if (ST1P1Health == 0)
+        {
+            St1P1 = false;
+            St1P2 = true;
+        }
+
         if (St1P2 == true && SpawnedEnemy2 == false)
         {
 
